@@ -12,21 +12,12 @@ import java.util.Random;
 
 public class ItemDAO {
 
-   private  static Item item = new Item();
+    private static Item item = new Item();
     SessionFactory sessionFactory;
 
     public Item daoRead() {
         return null;
     }
-
-   /* public static Long CreateId(Integer min, Integer max) {
-        int diff = max - min;
-        Random random = new Random();
-        int i = random.nextInt(diff + 1);
-        i += min;
-        Long  n = (Long) i;
-        return n;
-    }*/
 
     public void daoSave(Item item) throws HibernateException, IOException {
 
@@ -39,14 +30,11 @@ public class ItemDAO {
             transaction.commit();
             System.out.println("Save Item done ");
             throw new IOException();
-        }
-
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("Something wrong !!!!!!!!!!!!!!!!!!!!!!?????????????????");
             e.printStackTrace();
 
-        }
-        catch (HibernateException e ) {
+        } catch (HibernateException e) {
             System.err.println();
 
             e.printStackTrace();
@@ -56,32 +44,29 @@ public class ItemDAO {
     }
 
 
-
     public void daoUpdate() {
 
-            try (Session session = createSessionFactory().openSession()) {
+        try (Session session = createSessionFactory().openSession()) {
 
-                Transaction transaction = session.getTransaction();
-                transaction.begin();
+            Transaction transaction = session.getTransaction();
+            transaction.begin();
 
-                Long nr = item.getId();
-                Item findItem = findById(nr);
-                findItem.setName("Pro");
-                //action
-                session.update(findItem);
-                //close session/tr
-                transaction.commit();
-            } catch (HibernateException e) {
-                System.out.println("Nothing update!" + e.getMessage());
-            }
+            Long nr = item.getId();
+            Item findItem = findById(nr);
+            findItem.setName("Pro");
+            //action
+            session.update(findItem);
+            //close session/tr
+            transaction.commit();
+        } catch (HibernateException e) {
+            System.out.println("Nothing update!" + e.getMessage());
         }
+    }
 
 
     public Item daoDelete(long idn) {
         return null;
     }
-
-
 
 
     public Item findById(Long id) {
@@ -108,7 +93,7 @@ public class ItemDAO {
     }
 
 
-    public   SessionFactory createSessionFactory() {
+    public SessionFactory createSessionFactory() {
         if (sessionFactory == null) {
             new Configuration().configure().buildSessionFactory();
         }

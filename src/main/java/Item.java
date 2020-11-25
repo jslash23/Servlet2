@@ -4,7 +4,7 @@ import java.util.Date;
 @Entity//анотация
 @Table(name = "ITEM")
 
-public class Item {
+public class Item  {
 
     private Long id;//изменяю на long id меняю гетер и сетер  не работает постмен, 500 ошибка
     private String name;
@@ -12,13 +12,11 @@ public class Item {
     private Date lastUpdatedDate;
     private String description;
 
-
-
     @Id
+    //@Column(name = "ID")
     @SequenceGenerator(name = "IT_SEQ", sequenceName = "ITEM_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IT_SEQ")
 
-    @Column(name = "ID")
 
     public long getId() {
         return id;
@@ -27,6 +25,8 @@ public class Item {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 
     @Column(name = "NAME")
 

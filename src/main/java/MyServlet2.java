@@ -11,14 +11,10 @@ import org.hibernate.dialect.OracleDialect;
 
 @WebServlet(urlPatterns = "/test")
 
-public class MyServlet2 extends HttpServlet  {
-   /* @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse response) throws IOException {
-        response.getWriter().println("Test!!! Privet Use OK!!!!");
-    }*/
+public class MyServlet2 extends HttpServlet {
 
     private static final ItemService itemService = new ItemService();
-   private static Item item = new Item();
+    private static Item item = new Item();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -27,7 +23,7 @@ public class MyServlet2 extends HttpServlet  {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         //считываем стрим приходящий из Постмана (метод POST)
         //мапим данные Гибернейтом
@@ -35,11 +31,9 @@ public class MyServlet2 extends HttpServlet  {
         //сохраняем в БД
 
 
-
-        item.setId(0L);
         item.setName(req.getParameter("name"));
         item.setDescription(req.getParameter("description"));
-       itemService.servSave(item);
+        itemService.servSave(item);
 
         resp.getWriter().println("Post success");
     }
@@ -52,7 +46,7 @@ public class MyServlet2 extends HttpServlet  {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        long idServ  = Long.parseLong(req.getParameter("id"));
+        long idServ = Long.parseLong(req.getParameter("id"));
         itemService.servDelete(idServ);
 
         //делаем запрос req.getParameter("itemId") вызываем параметр  "itemId"
