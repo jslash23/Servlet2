@@ -13,8 +13,8 @@ public class ItemService {
 
     }
 
-    public Item servUpdate() throws Exception {
-        return itemDAO.daoUpdate();//
+    public void servUpdate() throws Exception {
+         itemDAO.daoUpdate();//
     }
 
     public Item servDelete(long idn) throws IOException{

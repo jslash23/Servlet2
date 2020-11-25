@@ -6,18 +6,20 @@ import java.util.Date;
 
 public class Item {
 
-    private Long id;
+    private Long id;//изменяю на long id меняю гетер и сетер  не работает постмен, 500 ошибка
     private String name;
     private Date dateCreated;
-    private Date lastUpdateDate;
+    private Date lastUpdatedDate;
     private String description;
 
-    @Id
 
+
+    @Id
     @SequenceGenerator(name = "IT_SEQ", sequenceName = "ITEM_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IT_SEQ")
 
     @Column(name = "ID")
+
     public long getId() {
         return id;
     }
@@ -46,14 +48,14 @@ public class Item {
         this.dateCreated = dateCreated;
     }
 
-    @Column(name = "LAST_UPDATE_DATE")
+    @Column(name = "LAST_UPDATED_DATE")
 
-    public Date getLastUpdateDate() {
-        return lastUpdateDate;
+    public Date getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setLastUpdatedDate(Date lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     @Column(name = "DESCRIPTION")
@@ -73,7 +75,7 @@ public class Item {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", dateCreated=" + dateCreated +
-                ", lastUpdateDate=" + lastUpdateDate +
+                ", lastUpdateDate=" + lastUpdatedDate +
                 ", description='" + description + '\'' +
                 '}';
     }

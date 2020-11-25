@@ -1,4 +1,3 @@
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -6,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialException;
 import java.io.IOException;
+import java.util.Date;
+
 import org.hibernate.dialect.OracleDialect;
 
 @WebServlet(urlPatterns = "/test")
@@ -17,7 +18,7 @@ public class MyServlet2 extends HttpServlet  {
     }*/
 
     private static final ItemService itemService = new ItemService();
-
+   private static Item item = new Item();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -33,15 +34,14 @@ public class MyServlet2 extends HttpServlet  {
         //добавляем ай ди и даты
         //сохраняем в БД
 
-        Item item = new Item();
 
+
+        item.setId(0L);
         item.setName(req.getParameter("name"));
         item.setDescription(req.getParameter("description"));
        itemService.servSave(item);
 
         resp.getWriter().println("Post success");
-
-
     }
 
     @Override
@@ -58,12 +58,4 @@ public class MyServlet2 extends HttpServlet  {
         //делаем запрос req.getParameter("itemId") вызываем параметр  "itemId"
         // и по айдишнику который получили делаем удаление объекта из БД
     }
-
-
-
-
-
-
-
-
 }

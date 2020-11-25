@@ -7,16 +7,26 @@ import org.hibernate.cfg.Configuration;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 
 public class ItemDAO {
-    MyServlet2 myServlet = new MyServlet2();
-    Item item = new Item();
+
+   private  static Item item = new Item();
     SessionFactory sessionFactory;
 
     public Item daoRead() {
         return null;
     }
+
+   /* public static Long CreateId(Integer min, Integer max) {
+        int diff = max - min;
+        Random random = new Random();
+        int i = random.nextInt(diff + 1);
+        i += min;
+        Long  n = (Long) i;
+        return n;
+    }*/
 
     public void daoSave(Item item) throws HibernateException, IOException {
 
@@ -32,6 +42,7 @@ public class ItemDAO {
         }
 
         catch (IOException e) {
+            System.err.println("Something wrong !!!!!!!!!!!!!!!!!!!!!!?????????????????");
             e.printStackTrace();
 
         }
@@ -46,13 +57,31 @@ public class ItemDAO {
 
 
 
-    public Item daoUpdate() {
-        return null;
-    }
+    public void daoUpdate() {
+
+            try (Session session = createSessionFactory().openSession()) {
+
+                Transaction transaction = session.getTransaction();
+                transaction.begin();
+
+                Long nr = item.getId();
+                Item findItem = findById(nr);
+                findItem.setName("Pro");
+                //action
+                session.update(findItem);
+                //close session/tr
+                transaction.commit();
+            } catch (HibernateException e) {
+                System.out.println("Nothing update!" + e.getMessage());
+            }
+        }
+
 
     public Item daoDelete(long idn) {
         return null;
     }
+
+
 
 
     public Item findById(Long id) {
@@ -79,9 +108,9 @@ public class ItemDAO {
     }
 
 
-    private SessionFactory createSessionFactory() {
+    public   SessionFactory createSessionFactory() {
         if (sessionFactory == null) {
-            sessionFactory = new Configuration().buildSessionFactory();
+            new Configuration().configure().buildSessionFactory();
         }
         return sessionFactory;
     }
