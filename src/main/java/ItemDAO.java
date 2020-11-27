@@ -3,6 +3,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.engine.spi.SessionFactoryDelegatingImpl;
 
 import javax.persistence.Query;
 import java.io.IOException;
@@ -12,14 +13,33 @@ import java.util.Random;
 
 public class ItemDAO {
 
-    private static Item item = new Item();
     SessionFactory sessionFactory;
 
-    public Item daoRead() {
-        return null;
+    public Item daoRead(String ds) {
+        Item item = new Item();
+        try (Session session = createSessionFactory().openSession()) {
+
+            org.hibernate.query.Query query = session.createQuery("from Item where description = :ds");
+            Transaction transaction = session.getTransaction();
+            transaction.begin();
+            //action
+            query.setParameter("ds", ds);
+            List list = query.list();
+
+            //close session/tr
+            transaction.commit();
+
+            for (Object l : list) {
+                item = (Item) l;
+            }
+            return item;
+            //тут  сессия закроется автоматичесски
+            //session.close();
+
+        }
     }
 
-    public void daoSave(Item item) throws HibernateException, IOException {
+  /*  public void daoSave(Item item) throws HibernateException, IOException {
 
         try (Session session = createSessionFactory().openSession()) {
 
@@ -41,19 +61,20 @@ public class ItemDAO {
             System.err.println("!!!!!!!" +
                     "cath worked " + "Save Item failed!!!" + e.getMessage());
         }
-    }
+    }*/
 
 
-    public void daoUpdate() {
 
+
+    public void daoUpdate(long id) {
+        Item item = new Item();
         try (Session session = createSessionFactory().openSession()) {
 
             Transaction transaction = session.getTransaction();
             transaction.begin();
 
-            Long nr = item.getId();
-            Item findItem = findById(nr);
-            findItem.setName("Pro");
+            Item findItem = findById(id);
+            findItem.setName("TEST");
             //action
             session.update(findItem);
             //close session/tr
@@ -64,21 +85,42 @@ public class ItemDAO {
     }
 
 
-    public Item daoDelete(long idn) {
-        return null;
-    }
 
-
-    public Item findById(Long id) {
+ /*  public void daoDelete(long idn) throws IOException{
 
         try (Session session = createSessionFactory().openSession()) {
             //
-            Query query = session.createQuery("from Item where id = :Id");
+            Query query = session.createQuery("delete from  Item where id = :Id");
+            Transaction transaction = session.getTransaction();
+            transaction.begin();
+            //action
+            query.setParameter("Id", idn);
+            query.executeUpdate();
+            //close session/tr
+            transaction.commit();
+           throw  new IOException();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        catch (HibernateException e) {
+            System.err.println("Select from Item failed" + e.getMessage());
+        }
+
+    }*/
+
+    public Item findById(Long id) {
+        Item item = new Item();
+
+        try (Session session = createSessionFactory().openSession()) {
+            org.hibernate.query.Query query = session.createQuery("from Item where id = :Id");
             Transaction transaction = session.getTransaction();
             transaction.begin();
             //action
             query.setParameter("Id", id);
-            List list = query.getResultList();
+            List list = query.list();
+
             //close session/tr
             transaction.commit();
 
@@ -86,17 +128,18 @@ public class ItemDAO {
                 item = (Item) l;
             }
             return item;
-        } catch (HibernateException e) {
-            System.err.println("Select from Hotel failed" + e.getMessage());
+            //тут  сессия закроется автоматичесски
+            //session.close();
+
         }
-        return item;
     }
 
 
     public SessionFactory createSessionFactory() {
         if (sessionFactory == null) {
-            new Configuration().configure().buildSessionFactory();
+//Hear we create new sessionFactory
+           return new Configuration().configure().buildSessionFactory();
         }
-        return sessionFactory;
+        return  sessionFactory;
     }
 }

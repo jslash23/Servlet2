@@ -2,22 +2,26 @@ import java.io.IOException;
 
 public class ItemService {
 
-    ItemDAO itemDAO = new ItemDAO();
 
-   public Item servRead() throws Exception {
-        return itemDAO.daoRead();//
+
+   public Item servRead( String desc) throws Exception {
+       ItemDAO itemDAO = new ItemDAO();
+        return itemDAO.daoRead(desc);//
     }
 
-    public void servSave(Item item) throws IOException {
+  /*  public void servSave(Item item) throws IOException {
+        ItemDAO itemDAO = new ItemDAO();
          itemDAO.daoSave(item);//
 
+    }*/
+
+    public void servUpdate(long id) throws IOException {
+        ItemDAO itemDAO = new ItemDAO();
+         itemDAO.daoUpdate(id);//
     }
 
-    public void servUpdate() throws Exception {
-         itemDAO.daoUpdate();//
-    }
-
-    public Item servDelete(long idn) throws IOException{
-        return itemDAO.daoDelete(idn);//
-    }
+  /*  public void servDelete(long idn) throws IOException{
+        ItemDAO itemDAO = new ItemDAO();
+         itemDAO.daoDelete(idn);//
+    }*/
 }
