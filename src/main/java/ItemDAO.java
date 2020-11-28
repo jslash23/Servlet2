@@ -4,8 +4,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.spi.SessionFactoryDelegatingImpl;
-
-import javax.persistence.Query;
+import org.hibernate.query.Query;
+//import javax.persistence.Query;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
@@ -15,15 +15,15 @@ public class ItemDAO {
 
     SessionFactory sessionFactory;
 
-    public Item daoRead(String ds) {
-        Item item = new Item();
+    public Item daoRead(Item item) {
+        //Item item = new Item();
         try (Session session = createSessionFactory().openSession()) {
 
-            org.hibernate.query.Query query = session.createQuery("from Item where description = :ds");
+            Query query = session.createQuery("from Item where description = :ds");
             Transaction transaction = session.getTransaction();
             transaction.begin();
             //action
-            query.setParameter("ds", ds);
+            query.setParameter("ds", item.getDescription());
             List list = query.list();
 
             //close session/tr
@@ -32,14 +32,14 @@ public class ItemDAO {
             for (Object l : list) {
                 item = (Item) l;
             }
-            return item;
+
             //тут  сессия закроется автоматичесски
             //session.close();
-
+        return item;
         }
     }
 
-  /*  public void daoSave(Item item) throws HibernateException, IOException {
+    public void daoSave(Item item) throws HibernateException, IOException {
 
         try (Session session = createSessionFactory().openSession()) {
 
@@ -61,12 +61,12 @@ public class ItemDAO {
             System.err.println("!!!!!!!" +
                     "cath worked " + "Save Item failed!!!" + e.getMessage());
         }
-    }*/
+    }
 
 
 
 
-    public void daoUpdate(long id) {
+  /*  public void daoUpdate(long id) {
         Item item = new Item();
         try (Session session = createSessionFactory().openSession()) {
 
@@ -82,7 +82,7 @@ public class ItemDAO {
         } catch (HibernateException e) {
             System.out.println("Nothing update!" + e.getMessage());
         }
-    }
+    }*/
 
 
 
