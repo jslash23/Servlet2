@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.rowset.serial.SerialException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 
 import org.hibernate.dialect.OracleDialect;
@@ -17,20 +18,14 @@ public class MyServlet2 extends HttpServlet {
 
    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Item item = new Item();
-       // resp.getWriter().println(req.getParameter("param"));
-        String params = req.getParameter("param");//должен возвращать в окно браузера введенное значение
-        try {
-            item.setDescription(req.getParameter("description"));
 
-           itemService.servRead(item);
-            //resp.getWriter().println(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+     // метод должен возвращать в окно браузера введенное значени
+       String params = req.getParameter("id");
+       itemService.servRead(params);
+       resp.getWriter().println(params);
+   }
 
-  /* @Override
+   @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Item item = new Item();
         //считываем стрим приходящий из Постмана (метод POST)
@@ -41,21 +36,21 @@ public class MyServlet2 extends HttpServlet {
         item.setName(req.getParameter("name"));
         item.setDescription(req.getParameter("description"));
         itemService.servSave(item);
-        resp.getWriter().println("Post success");
-    }*/
+        resp.getWriter().println(item);
+    }
 
 
     //делаем запрос req.getParameter("itemName") вызываем параметр  "itemName"
     // и по имени которое получили делаем обновление  объекта из БД
-  /* @Override
+   @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         long idServ = Long.parseLong(req.getParameter("id"));
         itemService.servUpdate(idServ);
-    }*/
+    }
 
 
 
-    /*@Override
+    @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         long idServ = Long.parseLong(req.getParameter("id"));
@@ -63,5 +58,5 @@ public class MyServlet2 extends HttpServlet {
 
         //делаем запрос req.getParameter("itemId") вызываем параметр  "itemId"
         // и по айдишнику который получили делаем удаление объекта из БД
-    }*/
+    }
 }

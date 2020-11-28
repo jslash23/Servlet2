@@ -12,16 +12,10 @@ public class Item  {
     private Date lastUpdatedDate;
     private String description;
 
-
-
-
     @Id
     @SequenceGenerator(name = "IT_SEQ", sequenceName = "ITEM_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "IT_SEQ")
 
-
-
-    //@Column(name = "ID")
     public long getId() {
         return id;
     }
