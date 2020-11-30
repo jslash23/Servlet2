@@ -2,7 +2,7 @@
 <!--  <display-name>Simple Servlet Aplication</display-name>
   <servlet>
     <servlet-name>simpleServlet</servlet-name>
-    <servlet-class>MyServlet2</servlet-class>
+    <servlet-class>MyServlet</servlet-class>
     <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet-mapping>

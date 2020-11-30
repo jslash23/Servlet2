@@ -12,7 +12,7 @@ import org.hibernate.dialect.OracleDialect;
 
 @WebServlet(urlPatterns = "/test")
 
-public class MyServlet2 extends HttpServlet {
+public class MyServlet extends HttpServlet {
 
     private static final ItemService itemService = new ItemService();
 
@@ -42,7 +42,7 @@ public class MyServlet2 extends HttpServlet {
 
     //делаем запрос req.getParameter("itemName") вызываем параметр  "itemName"
     // и по имени которое получили делаем обновление  объекта из БД
-   @Override
+ /*  @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         long idServ = Long.parseLong(req.getParameter("id"));
         itemService.servUpdate(idServ);
@@ -58,5 +58,5 @@ public class MyServlet2 extends HttpServlet {
 
         //делаем запрос req.getParameter("itemId") вызываем параметр  "itemId"
         // и по айдишнику который получили делаем удаление объекта из БД
-    }
+    }*/
 }
